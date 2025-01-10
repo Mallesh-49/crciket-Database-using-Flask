@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Players List</title>
+    <style>
+        body {
+            background-color: black;  /* Sets background color to black */
+            color: white;
+            font-size:35px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid white;  /* Adds a white border to table cells */
+        }
+
+        th {
+            background-color: #333;  /* Dark gray header row */
+        }
+
+        tr:nth-child(even) {
+            background-color: #444;  /* Slightly lighter gray for even rows */
+        }
+
+        tr:nth-child(odd) {
+            background-color: #222;  /* Slightly darker gray for odd rows */
+        }
+
+        input[type="text"], button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #444;  /* Dark background for input/button */
+            color: white;  /* White text color */
+            border: 1px solid #555;  /* Dark border */
+            border-radius: 5px;  /* Rounded corners */
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #666;  /* Lighten on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Players List</h1>
+
+    <form method="GET" action="/players">
+        <input
+            type="text"
+            name="query"
+            placeholder="Search by name or country"
+            value="{{ query }}"
+            required
+        >
+        <button type="submit">Search</button>
+
+
+
+</form>
+
+    {% if batsman %}
+    <h2>Batsman</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Matches</th>
+            <th>Runs</th>
+            <th>Centuries</th>
+            <th>Delete</th>
+        </tr>
+        {% for player in batsman %}
+        <tr>
+            <td><a href="{{ url_for('details',role='Batsman',id=player.id) }}">{{ player.name }}</a></td>
+            <td>{{ player.country }}</td>
+            <td>{{ player.matches }}</td>
+            <td>{{ player.runs }}</td>
+            <td>{{ player.centuries }}</td>
+            <td><a href="{{ url_for('delete',role='Batsman',id=player.id) }}">✘</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if bowlers %}
+    <h2>Bowlers</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Matches</th>
+            <th>Wickets</th>
+            <th>Economy</th>
+            <th>Delete</th>
+
+        </tr>
+        {% for player in bowlers %}
+        <tr>
+            <td><a href="{{ url_for('details',role='Bowler',id=player.id) }}">{{ player.name }}</a></td>
+            <td>{{ player.country }}</td>
+            <td>{{ player.matches }}</td>
+            <td>{{ player.wickets }}</td>
+            <td>{{ player.economy }}</td>
+            <td><a href="{{ url_for('delete',role='Bowler',id=player.id) }}">✘</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% endif %}
+
+    {% if allrounders %}
+    <h2>All-rounders</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Matches</th>
+            <th>Runs</th>
+            <th>Wickets</th>
+            <th>Delete</th>
+        </tr>
+        {% for player in allrounders %}
+        <tr>
+            <td><a href="{{ url_for('details',role='All-rounder',id=player.id) }}">{{ player.name }}</a></td>
+            <td>{{ player.country }}</td>
+            <td>{{ player.matches }}</td>
+            <td>{{ player.runs }}</td>
+            <td>{{ player.wickets }}</td>
+            <td><a href="{{ url_for('delete',role='All-rounder',id=player.id) }}">✘</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% endif %}
+
+</body>
+</html>
